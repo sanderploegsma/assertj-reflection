@@ -10,6 +10,21 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
         super(actual, ClassAssert.class);
     }
 
+    public ConstructorAssert hasDeclaredConstructor(Class<?>... parameterTypes) {
+        isNotNull();
+        try {
+            var constructor = actual.getDeclaredConstructor(parameterTypes);
+            return new ConstructorAssert(constructor);
+        } catch (NoSuchMethodException e) {
+            var parameterDescriptor = Arrays.stream(parameterTypes)
+                    .map(Class::getName)
+                    .collect(Collectors.joining(","));
+
+            throw failure("Expected %s to have declared constructor %s(%s) but no such constructor exists",
+                    actual.getName(), actual.getSimpleName(), parameterDescriptor);
+        }
+    }
+
     public MethodAssert hasDeclaredMethod(String methodName, Class<?>... parameterTypes) {
         isNotNull();
         try {
@@ -33,9 +48,8 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
                     .map(Class::getName)
                     .collect(Collectors.joining(","));
 
-            failWithMessage("Expected %s not to have declared method %s(%s) but found %s",
+            throw failure("Expected %s not to have declared method %s(%s) but found %s",
                     actual.getName(), methodName, parameterDescriptor, method.toString());
-            return this;
         } catch (NoSuchMethodException e) {
             return this;
         }

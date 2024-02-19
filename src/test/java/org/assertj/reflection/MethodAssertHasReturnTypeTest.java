@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.reflection.ReflectionAssert.assertThat;
+import static org.assertj.reflection.ReflectionAssertions.assertThat;
 
 class MethodAssertHasReturnTypeTest {
     @Test

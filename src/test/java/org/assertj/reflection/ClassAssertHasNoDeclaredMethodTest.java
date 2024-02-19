@@ -3,7 +3,7 @@ package org.assertj.reflection;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.reflection.ReflectionAssert.assertThat;
+import static org.assertj.reflection.ReflectionAssertions.assertThat;
 
 class ClassAssertHasNoDeclaredMethodTest {
     @Test

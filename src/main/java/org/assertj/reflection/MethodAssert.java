@@ -1,6 +1,7 @@
 package org.assertj.reflection;
 
 import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.api.Assertions;
 
 import java.lang.reflect.Method;
 
@@ -11,9 +12,7 @@ public class MethodAssert extends AbstractAssert<MethodAssert, Method> {
 
     public MethodAssert hasReturnType(Class<?> expected) {
         isNotNull();
-        if (!actual.getReturnType().equals(expected)) {
-            failWithActualExpectedAndMessage(actual.getReturnType(), expected, "");
-        }
+        Assertions.assertThat(actual.getReturnType()).isEqualTo(expected);
         return this;
     }
 }
