@@ -25,6 +25,17 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
         }
     }
 
+    public FieldAssert hasDeclaredField(String fieldName) {
+        isNotNull();
+        try {
+            var field = actual.getDeclaredField(fieldName);
+            return new FieldAssert(field);
+        } catch (NoSuchFieldException e) {
+            throw failure("Expected %s to have declared field %s but no such field exists",
+                    actual.getName(), fieldName);
+        }
+    }
+
     public MethodAssert hasDeclaredMethod(String methodName, Class<?>... parameterTypes) {
         isNotNull();
         try {

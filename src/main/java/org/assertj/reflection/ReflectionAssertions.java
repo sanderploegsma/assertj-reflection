@@ -1,6 +1,7 @@
 package org.assertj.reflection;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class ReflectionAssertions {
@@ -10,6 +11,10 @@ public class ReflectionAssertions {
 
     public static ConstructorAssert assertThat(Constructor<?> actual) {
         return new ConstructorAssert(actual);
+    }
+
+    public static FieldAssert assertThat(Field actual) {
+        return new FieldAssert(actual);
     }
 
     public static MethodAssert assertThat(Method method) {
