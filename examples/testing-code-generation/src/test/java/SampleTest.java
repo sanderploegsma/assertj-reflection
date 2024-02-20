@@ -1,3 +1,4 @@
+import org.assertj.core.api.Assertions;
 import org.assertj.reflection.ConstructorAssert;
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +29,11 @@ class SampleTest {
                 .hasDeclaredMethod("setFoo", String.class, method -> method.isPublic().hasReturnType(void.class))
                 .hasDeclaredMethod("setBar", Integer.class, method -> method.isPublic().hasReturnType(void.class))
                 .hasDeclaredMethod("setBaz", Boolean.class, method -> method.isPublic().hasReturnType(void.class));
+    }
+
+    @Test
+    void generatedClassHasPrivateFields() {
+        Assertions.assertThat(Sample.class.getDeclaredFields()).allSatisfy(field -> assertThat(field).isPrivate());
     }
 
     @Test
