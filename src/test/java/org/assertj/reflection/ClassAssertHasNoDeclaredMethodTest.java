@@ -17,13 +17,14 @@ class ClassAssertHasNoDeclaredMethodTest {
 
     @Test
     void methodInheritedFromSuper() {
-        assertThat(Subject.class).hasNoDeclaredMethod("methodOnSuper");
-        assertThat(Subject.class).hasNoDeclaredMethod("equals", Object.class);
+        assertThat(Subject.class)
+                .hasNoDeclaredMethod("methodOnSuper")
+                .hasNoDeclaredMethod("equals", new Class[]{Object.class});
     }
 
     @Test
     void nonExistingMethod() {
-        assertThat(Subject.class).hasNoDeclaredMethod("methodOnSubject", boolean.class);
+        assertThat(Subject.class).hasNoDeclaredMethod("methodOnSubject", new Class[]{boolean.class});
     }
 
     private static class Super {

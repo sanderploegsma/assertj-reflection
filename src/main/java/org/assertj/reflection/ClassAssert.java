@@ -3,18 +3,43 @@ package org.assertj.reflection;
 import org.assertj.core.api.AbstractAssert;
 
 import java.util.Arrays;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
+
     protected ClassAssert(Class<?> actual) {
         super(actual, ClassAssert.class);
     }
 
-    public ConstructorAssert hasDeclaredConstructor(Class<?>... parameterTypes) {
+    public ClassAssert hasDeclaredConstructor() {
+        return hasDeclaredConstructor(new Class[0], null);
+    }
+
+    public ClassAssert hasDeclaredConstructor(Class<?> parameterType) {
+        return hasDeclaredConstructor(new Class[]{parameterType}, null);
+    }
+
+    public ClassAssert hasDeclaredConstructor(Class<?>[] parameterTypes) {
+        return hasDeclaredConstructor(parameterTypes, null);
+    }
+
+    public ClassAssert hasDeclaredConstructor(Consumer<ConstructorAssert> constructorAssertConsumer) {
+        return hasDeclaredConstructor(new Class[0], constructorAssertConsumer);
+    }
+
+    public ClassAssert hasDeclaredConstructor(Class<?> parameterType, Consumer<ConstructorAssert> constructorAssertConsumer) {
+        return hasDeclaredConstructor(new Class[]{parameterType}, constructorAssertConsumer);
+    }
+
+    public ClassAssert hasDeclaredConstructor(Class<?>[] parameterTypes, Consumer<ConstructorAssert> constructorAssertConsumer) {
         isNotNull();
         try {
             var constructor = actual.getDeclaredConstructor(parameterTypes);
-            return new ConstructorAssert(constructor);
+            if (constructorAssertConsumer != null) {
+                constructorAssertConsumer.accept(new ConstructorAssert(constructor));
+            }
+            return this;
         } catch (NoSuchMethodException e) {
             var parameterDescriptor = Arrays.stream(parameterTypes)
                     .map(Class::getName)
@@ -25,22 +50,52 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
         }
     }
 
-    public FieldAssert hasDeclaredField(String fieldName) {
+    public ClassAssert hasDeclaredField(String fieldName) {
+        return hasDeclaredField(fieldName, null);
+    }
+
+    public ClassAssert hasDeclaredField(String fieldName, Consumer<FieldAssert> fieldAssertConsumer) {
         isNotNull();
         try {
             var field = actual.getDeclaredField(fieldName);
-            return new FieldAssert(field);
+            if (fieldAssertConsumer != null) {
+                fieldAssertConsumer.accept(new FieldAssert(field));
+            }
+            return this;
         } catch (NoSuchFieldException e) {
             throw failure("Expected %s to have declared field %s but no such field exists",
                     actual.getName(), fieldName);
         }
     }
 
-    public MethodAssert hasDeclaredMethod(String methodName, Class<?>... parameterTypes) {
+    public ClassAssert hasDeclaredMethod(String methodName) {
+        return hasDeclaredMethod(methodName, new Class[0], null);
+    }
+
+    public ClassAssert hasDeclaredMethod(String methodName, Class<?> parameterType) {
+        return hasDeclaredMethod(methodName, new Class[]{parameterType}, null);
+    }
+
+    public ClassAssert hasDeclaredMethod(String methodName, Class<?>[] parameterTypes) {
+        return hasDeclaredMethod(methodName, parameterTypes, null);
+    }
+
+    public ClassAssert hasDeclaredMethod(String methodName, Consumer<MethodAssert> methodAssertConsumer) {
+        return hasDeclaredMethod(methodName, new Class[0], methodAssertConsumer);
+    }
+
+    public ClassAssert hasDeclaredMethod(String methodName, Class<?> parameterType, Consumer<MethodAssert> methodAssertConsumer) {
+        return hasDeclaredMethod(methodName, new Class[]{parameterType}, methodAssertConsumer);
+    }
+
+    public ClassAssert hasDeclaredMethod(String methodName, Class<?>[] parameterTypes, Consumer<MethodAssert> methodAssertConsumer) {
         isNotNull();
         try {
             var method = actual.getDeclaredMethod(methodName, parameterTypes);
-            return new MethodAssert(method);
+            if (methodAssertConsumer != null) {
+                methodAssertConsumer.accept(new MethodAssert(method));
+            }
+            return this;
         } catch (NoSuchMethodException e) {
             var parameterDescriptor = Arrays.stream(parameterTypes)
                     .map(Class::getName)
@@ -51,7 +106,15 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
         }
     }
 
-    public ClassAssert hasNoDeclaredMethod(String methodName, Class<?>... parameterTypes) {
+    public ClassAssert hasNoDeclaredMethod(String methodName) {
+        return hasNoDeclaredMethod(methodName, new Class[0]);
+    }
+
+    public ClassAssert hasNoDeclaredMethod(String methodName, Class<?> parameterType) {
+        return hasNoDeclaredMethod(methodName, new Class[]{parameterType});
+    }
+
+    public ClassAssert hasNoDeclaredMethod(String methodName, Class<?>[] parameterTypes) {
         isNotNull();
         try {
             var method = actual.getDeclaredMethod(methodName, parameterTypes);

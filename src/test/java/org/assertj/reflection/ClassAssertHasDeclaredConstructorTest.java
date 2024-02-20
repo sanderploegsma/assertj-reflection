@@ -8,8 +8,14 @@ import static org.assertj.reflection.ReflectionAssertions.assertThat;
 class ClassAssertHasDeclaredConstructorTest {
     @Test
     void declaredConstructors() {
-        assertThat(Subject.class).hasDeclaredConstructor(int.class);
-        assertThat(Subject.class).hasDeclaredConstructor(int.class, boolean.class);
+        assertThat(Subject.class)
+                .hasDeclaredConstructor(int.class)
+                .hasDeclaredConstructor(new Class[]{int.class, boolean.class});
+    }
+
+    @Test
+    void withConstructorAssertConsumer() {
+        assertThat(Subject.class).hasDeclaredConstructor(int.class, ConstructorAssert::isNotNull);
     }
 
     @Test

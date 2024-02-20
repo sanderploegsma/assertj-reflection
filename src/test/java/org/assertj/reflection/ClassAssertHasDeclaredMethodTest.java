@@ -8,10 +8,16 @@ import static org.assertj.reflection.ReflectionAssertions.assertThat;
 class ClassAssertHasDeclaredMethodTest {
     @Test
     void declaredMethods() {
-        assertThat(Subject.class).hasDeclaredMethod("methodOnSubject");
-        assertThat(Subject.class).hasDeclaredMethod("methodOnSubject", int.class);
-        assertThat(Subject.class).hasDeclaredMethod("methodOnBoth");
-        assertThat(Subject.class).hasDeclaredMethod("toString");
+        assertThat(Subject.class)
+                .hasDeclaredMethod("methodOnSubject")
+                .hasDeclaredMethod("methodOnSubject", int.class)
+                .hasDeclaredMethod("methodOnBoth")
+                .hasDeclaredMethod("toString");
+    }
+
+    @Test
+    void withMethodAssertConsumer() {
+        assertThat(Subject.class).hasDeclaredMethod("methodOnSubject", MethodAssert::isNotNull);
     }
 
     @Test

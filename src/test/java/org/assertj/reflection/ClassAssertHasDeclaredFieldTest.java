@@ -8,8 +8,14 @@ import static org.assertj.reflection.ReflectionAssertions.assertThat;
 class ClassAssertHasDeclaredFieldTest {
     @Test
     void declaredFields() {
-        assertThat(Subject.class).hasDeclaredField("field2");
-        assertThat(Subject.class).hasDeclaredField("field3");
+        assertThat(Subject.class)
+                .hasDeclaredField("field2")
+                .hasDeclaredField("field3");
+    }
+
+    @Test
+    void withFieldAssertConsumer() {
+        assertThat(Subject.class).hasDeclaredField("field2", FieldAssert::isNotNull);
     }
 
     @Test
