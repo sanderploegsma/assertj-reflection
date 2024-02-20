@@ -12,7 +12,7 @@ class ClassAssertHasDeclaredFieldTest {
 
     private static class Subject extends Super {
         public int field2 = 2;
-        public static int field3 = 2;
+        public static int field3 = 3;
     }
 
     @Test

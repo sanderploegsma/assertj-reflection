@@ -108,6 +108,29 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
         }
     }
 
+    public ClassAssert hasNoDeclaredConstructor() {
+        return hasNoDeclaredConstructor( new Class[0]);
+    }
+
+    public ClassAssert hasNoDeclaredConstructor(Class<?> parameterType) {
+        return hasNoDeclaredConstructor( new Class[]{parameterType});
+    }
+
+    public ClassAssert hasNoDeclaredConstructor(Class<?>[] parameterTypes) {
+        isNotNull();
+        try {
+            var constructor = actual.getDeclaredConstructor(parameterTypes);
+            var parameterDescriptor = Arrays.stream(parameterTypes)
+                    .map(Class::getName)
+                    .collect(Collectors.joining(","));
+
+            throw failure("Expected %s not to have declared constructor %s(%s) but found %s",
+                    actual.getName(), actual.getSimpleName(), parameterDescriptor, constructor.toString());
+        } catch (NoSuchMethodException e) {
+            return this;
+        }
+    }
+
     public ClassAssert hasDeclaredField(String fieldName) {
         return hasDeclaredField(fieldName, null);
     }
@@ -123,6 +146,17 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
         } catch (NoSuchFieldException e) {
             throw failure("Expected %s to have declared field %s but no such field exists",
                     actual.getName(), fieldName);
+        }
+    }
+
+    public ClassAssert hasNoDeclaredField(String fieldName) {
+        isNotNull();
+        try {
+            var field = actual.getDeclaredField(fieldName);
+            throw failure("Expected %s not to have declared field %s but found %s",
+                    actual.getName(), fieldName, field.toString());
+        } catch (NoSuchFieldException e) {
+            return this;
         }
     }
 
