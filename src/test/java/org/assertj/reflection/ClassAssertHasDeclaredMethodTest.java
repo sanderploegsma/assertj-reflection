@@ -12,7 +12,8 @@ class ClassAssertHasDeclaredMethodTest {
                 .hasDeclaredMethod("methodOnSubject")
                 .hasDeclaredMethod("methodOnSubject", int.class)
                 .hasDeclaredMethod("methodOnBoth")
-                .hasDeclaredMethod("toString");
+                .hasDeclaredMethod("toString")
+                .hasDeclaredMethod("staticMethod", new Class[]{int.class, boolean.class});
     }
 
     @Test
@@ -61,6 +62,9 @@ class ClassAssertHasDeclaredMethodTest {
         @Override
         public String toString() {
             return super.toString();
+        }
+
+        public static void staticMethod(int arg1, boolean arg2) {
         }
     }
 }
