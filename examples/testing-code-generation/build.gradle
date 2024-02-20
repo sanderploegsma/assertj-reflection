@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'org.jsonschema2pojo' version '1.2.1'
+}
+
+group = 'com.github.sanderploegsma'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.assertj:assertj-core:3.19.0'
+    testImplementation rootProject
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jsonSchema2Pojo {
+    source = files(sourceSets.main.output.resourcesDir)
+    targetDirectory = file("${project.buildDir}/generated-sources/js2p")
+    targetPackage = ''
+    sourceType = 'jsonschema'
+    annotationStyle = 'none'
+}
