@@ -33,6 +33,9 @@ class ClassAssertHasDeclaredMethodTest {
 
         public static void staticMethod(int arg1, boolean arg2) {
         }
+
+        static <T, U extends String> void genericMethod(T arg1, U arg2) {
+        }
     }
 
     @Test
@@ -42,7 +45,8 @@ class ClassAssertHasDeclaredMethodTest {
                 .hasDeclaredMethod("methodOnSubject", int.class)
                 .hasDeclaredMethod("methodOnBoth")
                 .hasDeclaredMethod("toString")
-                .hasDeclaredMethod("staticMethod", new Class[]{int.class, boolean.class});
+                .hasDeclaredMethod("staticMethod", new Class[]{int.class, boolean.class})
+                .hasDeclaredMethod("genericMethod", new Class[]{Object.class, String.class});
     }
 
     @Test

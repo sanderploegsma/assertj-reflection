@@ -17,7 +17,6 @@ class MethodAssertHasReturnTypeTest {
         }
 
         void nothing() {
-
         }
     }
 
