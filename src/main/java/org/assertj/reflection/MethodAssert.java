@@ -6,11 +6,25 @@ import org.assertj.core.api.Assertions;
 import java.lang.reflect.AccessFlag;
 import java.lang.reflect.Method;
 
+/**
+ * Assertions for the {@link Method} type.
+ */
 public class MethodAssert extends AbstractAssert<MethodAssert, Method> {
+
+    /**
+     * Creates a new {@link MethodAssert}.
+     *
+     * @param actual The actual value.
+     */
     protected MethodAssert(Method actual) {
         super(actual, MethodAssert.class);
     }
 
+    /**
+     * Verifies that the {@link Method} is <em>public</em>.
+     *
+     * @return This {@link MethodAssert} instance.
+     */
     public MethodAssert isPublic() {
         isNotNull();
         Assertions.assertThat(actual.accessFlags())
@@ -19,6 +33,11 @@ public class MethodAssert extends AbstractAssert<MethodAssert, Method> {
         return this;
     }
 
+    /**
+     * Verifies that the {@link Method} is <em>protected</em>.
+     *
+     * @return This {@link MethodAssert} instance.
+     */
     public MethodAssert isProtected() {
         isNotNull();
         Assertions.assertThat(actual.accessFlags())
@@ -27,6 +46,11 @@ public class MethodAssert extends AbstractAssert<MethodAssert, Method> {
         return this;
     }
 
+    /**
+     * Verifies that the {@link Method} is <em>private</em>.
+     *
+     * @return This {@link MethodAssert} instance.
+     */
     public MethodAssert isPrivate() {
         isNotNull();
         Assertions.assertThat(actual.accessFlags())
@@ -35,6 +59,11 @@ public class MethodAssert extends AbstractAssert<MethodAssert, Method> {
         return this;
     }
 
+    /**
+     * Verifies that the {@link Method} is <em>package-private</em>.
+     *
+     * @return This {@link MethodAssert} instance.
+     */
     public MethodAssert isPackagePrivate() {
         isNotNull();
         Assertions.assertThat(actual.accessFlags())
@@ -43,6 +72,11 @@ public class MethodAssert extends AbstractAssert<MethodAssert, Method> {
         return this;
     }
 
+    /**
+     * Verifies that the {@link Method} is <em>static</em>.
+     *
+     * @return This {@link MethodAssert} instance.
+     */
     public MethodAssert isStatic() {
         isNotNull();
         Assertions.assertThat(actual.accessFlags())
@@ -51,6 +85,12 @@ public class MethodAssert extends AbstractAssert<MethodAssert, Method> {
         return this;
     }
 
+    /**
+     * Verifies that the {@link Method} has the expected return type.
+     *
+     * @param expected The expected return type of the {@link Method}.
+     * @return This {@link MethodAssert} instance.
+     */
     public MethodAssert hasReturnType(Class<?> expected) {
         isNotNull();
         Assertions.assertThat(actual.getReturnType()).isEqualTo(expected);

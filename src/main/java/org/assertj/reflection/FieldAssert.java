@@ -6,11 +6,25 @@ import org.assertj.core.api.Assertions;
 import java.lang.reflect.AccessFlag;
 import java.lang.reflect.Field;
 
+/**
+ * Assertions for the {@link Field} type.
+ */
 public class FieldAssert extends AbstractAssert<FieldAssert, Field> {
+
+    /**
+     * Creates a new {@link FieldAssert}.
+     *
+     * @param actual The actual value.
+     */
     protected FieldAssert(Field actual) {
         super(actual, FieldAssert.class);
     }
 
+    /**
+     * Verifies that the {@link Field} is <em>public</em>.
+     *
+     * @return This {@link FieldAssert} instance.
+     */
     public FieldAssert isPublic() {
         isNotNull();
         Assertions.assertThat(actual.accessFlags())
@@ -19,6 +33,11 @@ public class FieldAssert extends AbstractAssert<FieldAssert, Field> {
         return this;
     }
 
+    /**
+     * Verifies that the {@link Field} is <em>protected</em>.
+     *
+     * @return This {@link FieldAssert} instance.
+     */
     public FieldAssert isProtected() {
         isNotNull();
         Assertions.assertThat(actual.accessFlags())
@@ -27,6 +46,11 @@ public class FieldAssert extends AbstractAssert<FieldAssert, Field> {
         return this;
     }
 
+    /**
+     * Verifies that the {@link Field} is <em>private</em>.
+     *
+     * @return This {@link FieldAssert} instance.
+     */
     public FieldAssert isPrivate() {
         isNotNull();
         Assertions.assertThat(actual.accessFlags())
@@ -35,6 +59,11 @@ public class FieldAssert extends AbstractAssert<FieldAssert, Field> {
         return this;
     }
 
+    /**
+     * Verifies that the {@link Field} is <em>package-private</em>.
+     *
+     * @return This {@link FieldAssert} instance.
+     */
     public FieldAssert isPackagePrivate() {
         isNotNull();
         Assertions.assertThat(actual.accessFlags())
@@ -43,6 +72,11 @@ public class FieldAssert extends AbstractAssert<FieldAssert, Field> {
         return this;
     }
 
+    /**
+     * Verifies that the {@link Field} is <em>final</em>.
+     *
+     * @return This {@link FieldAssert} instance.
+     */
     public FieldAssert isFinal() {
         isNotNull();
         Assertions.assertThat(actual.accessFlags())
@@ -51,6 +85,11 @@ public class FieldAssert extends AbstractAssert<FieldAssert, Field> {
         return this;
     }
 
+    /**
+     * Verifies that the {@link Field} is <em>static</em>.
+     *
+     * @return This {@link FieldAssert} instance.
+     */
     public FieldAssert isStatic() {
         isNotNull();
         Assertions.assertThat(actual.accessFlags())
