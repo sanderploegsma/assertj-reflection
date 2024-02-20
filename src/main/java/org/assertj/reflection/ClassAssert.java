@@ -1,7 +1,9 @@
 package org.assertj.reflection;
 
 import org.assertj.core.api.AbstractAssert;
+import org.assertj.core.api.Assertions;
 
+import java.lang.reflect.AccessFlag;
 import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -10,6 +12,62 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
 
     protected ClassAssert(Class<?> actual) {
         super(actual, ClassAssert.class);
+    }
+
+    public ClassAssert isPublic() {
+        isNotNull();
+        Assertions.assertThat(actual.accessFlags())
+                .as("Expecting class %s to be public", actual.getName())
+                .contains(AccessFlag.PUBLIC);
+        return this;
+    }
+
+    public ClassAssert isProtected() {
+        isNotNull();
+        Assertions.assertThat(actual.accessFlags())
+                .as("Expecting class %s to be protected", actual.getName())
+                .contains(AccessFlag.PROTECTED);
+        return this;
+    }
+
+    public ClassAssert isPrivate() {
+        isNotNull();
+        Assertions.assertThat(actual.accessFlags())
+                .as("Expecting class %s to be private", actual.getName())
+                .contains(AccessFlag.PRIVATE);
+        return this;
+    }
+
+    public ClassAssert isPackagePrivate() {
+        isNotNull();
+        Assertions.assertThat(actual.accessFlags())
+                .as("Expecting class %s to be package-private", actual.getName())
+                .doesNotContain(AccessFlag.PUBLIC, AccessFlag.PROTECTED, AccessFlag.PRIVATE);
+        return this;
+    }
+
+    public ClassAssert isAbstract() {
+        isNotNull();
+        Assertions.assertThat(actual.accessFlags())
+                .as("Expecting class %s to be abstract", actual.getName())
+                .contains(AccessFlag.ABSTRACT);
+        return this;
+    }
+
+    public ClassAssert isFinal() {
+        isNotNull();
+        Assertions.assertThat(actual.accessFlags())
+                .as("Expecting class %s to be final", actual.getName())
+                .contains(AccessFlag.FINAL);
+        return this;
+    }
+
+    public ClassAssert isStatic() {
+        isNotNull();
+        Assertions.assertThat(actual.accessFlags())
+                .as("Expecting class %s to be static", actual.getName())
+                .contains(AccessFlag.STATIC);
+        return this;
     }
 
     public ClassAssert hasDeclaredConstructor() {

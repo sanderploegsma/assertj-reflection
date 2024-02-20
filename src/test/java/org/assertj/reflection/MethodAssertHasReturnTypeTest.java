@@ -7,6 +7,20 @@ import java.util.List;
 import static org.assertj.reflection.ReflectionAssertions.assertThat;
 
 class MethodAssertHasReturnTypeTest {
+    private static class Subject {
+        int simple(String parameter) {
+            return -1;
+        }
+
+        List<Integer> complex() {
+            return null;
+        }
+
+        void nothing() {
+
+        }
+    }
+
     @Test
     void methodReturningSimpleType() throws NoSuchMethodException {
         var method = Subject.class.getDeclaredMethod("simple", String.class);
@@ -23,19 +37,5 @@ class MethodAssertHasReturnTypeTest {
     void methodReturningNothing() throws NoSuchMethodException {
         var method = Subject.class.getDeclaredMethod("nothing");
         assertThat(method).hasReturnType(void.class);
-    }
-
-    private static class Subject {
-        int simple(String parameter) {
-            return -1;
-        }
-
-        List<Integer> complex() {
-            return null;
-        }
-
-        void nothing() {
-
-        }
     }
 }

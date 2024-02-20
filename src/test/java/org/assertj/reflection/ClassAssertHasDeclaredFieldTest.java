@@ -6,6 +6,15 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.reflection.ReflectionAssertions.assertThat;
 
 class ClassAssertHasDeclaredFieldTest {
+    private static class Super {
+        public int field1 = 1;
+    }
+
+    private static class Subject extends Super {
+        public int field2 = 2;
+        public static int field3 = 2;
+    }
+
     @Test
     void declaredFields() {
         assertThat(Subject.class)
@@ -30,14 +39,5 @@ class ClassAssertHasDeclaredFieldTest {
         Assertions.assertThatExceptionOfType(AssertionError.class)
                 .isThrownBy(() -> assertThat(Subject.class).hasDeclaredField("field4"))
                 .withMessage("Expected org.assertj.reflection.ClassAssertHasDeclaredFieldTest$Subject to have declared field field4 but no such field exists");
-    }
-
-    private static class Super {
-        public int field1 = 1;
-    }
-
-    private static class Subject extends Super {
-        public int field2 = 2;
-        public static int field3 = 2;
     }
 }
