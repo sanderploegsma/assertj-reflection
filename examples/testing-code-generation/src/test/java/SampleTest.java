@@ -6,11 +6,6 @@ import static org.assertj.reflection.ReflectionAssertions.assertThat;
 
 class SampleTest {
     @Test
-    void generatedClassIsPublic() {
-        assertThat(Sample.class).isPublic();
-    }
-
-    @Test
     void generatedClassHasPublicDefaultConstructor() {
         assertThat(Sample.class).hasDeclaredConstructor(ConstructorAssert::isPublic);
     }

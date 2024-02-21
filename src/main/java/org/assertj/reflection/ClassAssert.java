@@ -1,9 +1,7 @@
 package org.assertj.reflection;
 
 import org.assertj.core.api.AbstractAssert;
-import org.assertj.core.api.Assertions;
 
-import java.lang.reflect.AccessFlag;
 import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -20,97 +18,6 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
      */
     protected ClassAssert(Class<?> actual) {
         super(actual, ClassAssert.class);
-    }
-
-    /**
-     * Verifies that the {@link Class} is <em>public</em>.
-     *
-     * @return This {@link ClassAssert} instance.
-     */
-    public ClassAssert isPublic() {
-        isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting class %s to be public", actual.getName())
-                .contains(AccessFlag.PUBLIC);
-        return this;
-    }
-
-    /**
-     * Verifies that the {@link Class} is <em>protected</em>.
-     *
-     * @return This {@link ClassAssert} instance.
-     */
-    public ClassAssert isProtected() {
-        isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting class %s to be protected", actual.getName())
-                .contains(AccessFlag.PROTECTED);
-        return this;
-    }
-
-    /**
-     * Verifies that the {@link Class} is <em>private</em>.
-     *
-     * @return This {@link ClassAssert} instance.
-     */
-    public ClassAssert isPrivate() {
-        isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting class %s to be private", actual.getName())
-                .contains(AccessFlag.PRIVATE);
-        return this;
-    }
-
-    /**
-     * Verifies that the {@link Class} is <em>package-private</em>.
-     *
-     * @return This {@link ClassAssert} instance.
-     */
-    public ClassAssert isPackagePrivate() {
-        isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting class %s to be package-private", actual.getName())
-                .doesNotContain(AccessFlag.PUBLIC, AccessFlag.PROTECTED, AccessFlag.PRIVATE);
-        return this;
-    }
-
-    /**
-     * Verifies that the {@link Class} is <em>abstract</em>.
-     *
-     * @return This {@link ClassAssert} instance.
-     */
-    public ClassAssert isAbstract() {
-        isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting class %s to be abstract", actual.getName())
-                .contains(AccessFlag.ABSTRACT);
-        return this;
-    }
-
-    /**
-     * Verifies that the {@link Class} is <em>final</em>.
-     *
-     * @return This {@link ClassAssert} instance.
-     */
-    public ClassAssert isFinal() {
-        isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting class %s to be final", actual.getName())
-                .contains(AccessFlag.FINAL);
-        return this;
-    }
-
-    /**
-     * Verifies that the {@link Class} is <em>static</em>.
-     *
-     * @return This {@link ClassAssert} instance.
-     */
-    public ClassAssert isStatic() {
-        isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting class %s to be static", actual.getName())
-                .contains(AccessFlag.STATIC);
-        return this;
     }
 
     /**
