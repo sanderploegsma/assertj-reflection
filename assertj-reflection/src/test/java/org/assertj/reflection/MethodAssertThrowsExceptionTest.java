@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.text.ParseException;
 
 import static org.assertj.reflection.ReflectionAssertions.assertThat;
@@ -30,15 +31,15 @@ class MethodAssertThrowsExceptionTest {
 
     @Test
     void throwsDifferentException() throws NoSuchMethodException {
-        var method = Subject.class.getDeclaredMethod("throwsExceptions");
+        Method actual = Subject.class.getDeclaredMethod("throwsExceptions");
         Assertions.assertThatExceptionOfType(AssertionError.class)
-                .isThrownBy(() -> assertThat(method).throwsException(ParseException.class));
+                .isThrownBy(() -> assertThat(actual).throwsException(ParseException.class));
     }
 
     @Test
     void throwsNoException() throws NoSuchMethodException {
-        var method = Subject.class.getDeclaredMethod("throwsNothing");
+        Method actual = Subject.class.getDeclaredMethod("throwsNothing");
         Assertions.assertThatExceptionOfType(AssertionError.class)
-                        .isThrownBy(() -> assertThat(method).throwsException(IOException.class));
+                        .isThrownBy(() -> assertThat(actual).throwsException(IOException.class));
     }
 }

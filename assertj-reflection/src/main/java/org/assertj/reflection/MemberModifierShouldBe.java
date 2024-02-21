@@ -63,7 +63,7 @@ class MemberModifierShouldBe extends BasicErrorMessageFactory {
     }
 
     private static String modifiers(Member actual) {
-        var modifiers = actual.getModifiers();
+        int modifiers = actual.getModifiers();
         if (!Modifier.isPublic(modifiers) && !Modifier.isProtected(modifiers) && !Modifier.isPrivate(modifiers)) {
             return PACKAGE_PRIVATE;
         }

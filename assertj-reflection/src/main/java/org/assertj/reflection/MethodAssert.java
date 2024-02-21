@@ -189,8 +189,7 @@ public class MethodAssert extends AbstractAssert<MethodAssert, Method> {
      */
     public MethodAssert throwsException(Class<? extends Exception> expected) {
         isNotNull();
-        var exceptions = actual.getExceptionTypes();
-        Assertions.assertThat(exceptions).anyMatch(expected::isAssignableFrom);
+        Assertions.assertThat(actual.getExceptionTypes()).anyMatch(expected::isAssignableFrom);
         return this;
     }
 }

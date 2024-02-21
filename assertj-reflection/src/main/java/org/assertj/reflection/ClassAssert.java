@@ -2,6 +2,9 @@ package org.assertj.reflection;
 
 import org.assertj.core.api.AbstractAssert;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -64,13 +67,13 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
     public ClassAssert hasDeclaredConstructor(Class<?>[] parameterTypes, Consumer<ConstructorAssert> constructorAssertConsumer) {
         isNotNull();
         try {
-            var constructor = actual.getDeclaredConstructor(parameterTypes);
+            Constructor<?> constructor = actual.getDeclaredConstructor(parameterTypes);
             if (constructorAssertConsumer != null) {
                 constructorAssertConsumer.accept(new ConstructorAssert(constructor));
             }
             return this;
         } catch (NoSuchMethodException e) {
-            var parameterDescriptor = Arrays.stream(parameterTypes)
+            String parameterDescriptor = Arrays.stream(parameterTypes)
                     .map(Class::getName)
                     .collect(Collectors.joining(","));
 
@@ -88,8 +91,8 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
     public ClassAssert hasNoDeclaredConstructor(Class<?>... parameterTypes) {
         isNotNull();
         try {
-            var constructor = actual.getDeclaredConstructor(parameterTypes);
-            var parameterDescriptor = Arrays.stream(parameterTypes)
+            Constructor<?> constructor = actual.getDeclaredConstructor(parameterTypes);
+            String parameterDescriptor = Arrays.stream(parameterTypes)
                     .map(Class::getName)
                     .collect(Collectors.joining(","));
 
@@ -121,7 +124,7 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
     public ClassAssert hasDeclaredField(String fieldName, Consumer<FieldAssert> fieldAssertConsumer) {
         isNotNull();
         try {
-            var field = actual.getDeclaredField(fieldName);
+            Field field = actual.getDeclaredField(fieldName);
             if (fieldAssertConsumer != null) {
                 fieldAssertConsumer.accept(new FieldAssert(field));
             }
@@ -141,7 +144,7 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
     public ClassAssert hasNoDeclaredField(String fieldName) {
         isNotNull();
         try {
-            var field = actual.getDeclaredField(fieldName);
+            Field field = actual.getDeclaredField(fieldName);
             throw failure("Expected %s not to have declared field %s but found %s",
                     actual.getName(), fieldName, field.toString());
         } catch (NoSuchFieldException e) {
@@ -197,13 +200,13 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
     public ClassAssert hasDeclaredMethod(String methodName, Class<?>[] parameterTypes, Consumer<MethodAssert> methodAssertConsumer) {
         isNotNull();
         try {
-            var method = actual.getDeclaredMethod(methodName, parameterTypes);
+            Method method = actual.getDeclaredMethod(methodName, parameterTypes);
             if (methodAssertConsumer != null) {
                 methodAssertConsumer.accept(new MethodAssert(method));
             }
             return this;
         } catch (NoSuchMethodException e) {
-            var parameterDescriptor = Arrays.stream(parameterTypes)
+            String parameterDescriptor = Arrays.stream(parameterTypes)
                     .map(Class::getName)
                     .collect(Collectors.joining(","));
 
@@ -222,8 +225,8 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
     public ClassAssert hasNoDeclaredMethod(String methodName, Class<?>... parameterTypes) {
         isNotNull();
         try {
-            var method = actual.getDeclaredMethod(methodName, parameterTypes);
-            var parameterDescriptor = Arrays.stream(parameterTypes)
+            Method method = actual.getDeclaredMethod(methodName, parameterTypes);
+            String parameterDescriptor = Arrays.stream(parameterTypes)
                     .map(Class::getName)
                     .collect(Collectors.joining(","));
 

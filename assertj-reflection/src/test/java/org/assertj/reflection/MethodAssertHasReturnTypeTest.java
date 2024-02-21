@@ -2,6 +2,7 @@ package org.assertj.reflection;
 
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 import static org.assertj.reflection.ReflectionAssertions.assertThat;
@@ -22,19 +23,19 @@ class MethodAssertHasReturnTypeTest {
 
     @Test
     void methodReturningSimpleType() throws NoSuchMethodException {
-        var method = Subject.class.getDeclaredMethod("simple", String.class);
-        assertThat(method).hasReturnType(int.class);
+        Method actual = Subject.class.getDeclaredMethod("simple", String.class);
+        assertThat(actual).hasReturnType(int.class);
     }
 
     @Test
     void methodReturningComplexType() throws NoSuchMethodException {
-        var method = Subject.class.getDeclaredMethod("complex");
-        assertThat(method).hasReturnType(List.class);
+        Method actual = Subject.class.getDeclaredMethod("complex");
+        assertThat(actual).hasReturnType(List.class);
     }
 
     @Test
     void methodReturningNothing() throws NoSuchMethodException {
-        var method = Subject.class.getDeclaredMethod("nothing");
-        assertThat(method).hasReturnType(void.class);
+        Method actual = Subject.class.getDeclaredMethod("nothing");
+        assertThat(actual).hasReturnType(void.class);
     }
 }
