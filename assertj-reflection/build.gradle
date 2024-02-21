@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'jacoco'
 }
 
 group = 'io.github.sanderploegsma'
@@ -18,4 +19,19 @@ dependencies {
 
 test {
     useJUnitPlatform()
+
+    testLogging {
+        exceptionFormat = "full"
+        showStandardStreams = true
+        events = ["passed", "failed", "skipped"]
+    }
+
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+    }
 }
