@@ -3,8 +3,10 @@ package org.assertj.reflection;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 
-import java.lang.reflect.AccessFlag;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
+import static org.assertj.reflection.MemberModifierShouldBe.*;
 
 /**
  * Assertions for the {@link Method} type.
@@ -27,10 +29,27 @@ public class MethodAssert extends AbstractAssert<MethodAssert, Method> {
      */
     public MethodAssert isPublic() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting method %s to be public", actual.toString())
-                .contains(AccessFlag.PUBLIC);
+        if (!hasPublicModifier()) {
+            throw assertionError(shouldBePublic(actual));
+        }
         return this;
+    }
+
+    /**
+     * Verifies that the {@link Method} is not <em>public</em>.
+     *
+     * @return This {@link MethodAssert} instance.
+     */
+    public MethodAssert isNotPublic() {
+        isNotNull();
+        if (hasPublicModifier()) {
+            throw assertionError(shouldNotBePublic(actual));
+        }
+        return this;
+    }
+
+    private boolean hasPublicModifier() {
+        return Modifier.isPublic(actual.getModifiers());
     }
 
     /**
@@ -40,10 +59,27 @@ public class MethodAssert extends AbstractAssert<MethodAssert, Method> {
      */
     public MethodAssert isProtected() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting method %s to be protected", actual.toString())
-                .contains(AccessFlag.PROTECTED);
+        if (!hasProtectedModifier()) {
+            throw assertionError(shouldBeProtected(actual));
+        }
         return this;
+    }
+
+    /**
+     * Verifies that the {@link Method} is not <em>protected</em>.
+     *
+     * @return This {@link MethodAssert} instance.
+     */
+    public MethodAssert isNotProtected() {
+        isNotNull();
+        if (hasProtectedModifier()) {
+            throw assertionError(shouldNotBeProtected(actual));
+        }
+        return this;
+    }
+
+    private boolean hasProtectedModifier() {
+        return Modifier.isProtected(actual.getModifiers());
     }
 
     /**
@@ -53,10 +89,27 @@ public class MethodAssert extends AbstractAssert<MethodAssert, Method> {
      */
     public MethodAssert isPrivate() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting method %s to be private", actual.toString())
-                .contains(AccessFlag.PRIVATE);
+        if (!hasPrivateModifier()) {
+            throw assertionError(shouldBePrivate(actual));
+        }
         return this;
+    }
+
+    /**
+     * Verifies that the {@link Method} is not <em>private</em>.
+     *
+     * @return This {@link MethodAssert} instance.
+     */
+    public MethodAssert isNotPrivate() {
+        isNotNull();
+        if (hasPrivateModifier()) {
+            throw assertionError(shouldNotBePrivate(actual));
+        }
+        return this;
+    }
+
+    private boolean hasPrivateModifier() {
+        return Modifier.isPrivate(actual.getModifiers());
     }
 
     /**
@@ -66,9 +119,22 @@ public class MethodAssert extends AbstractAssert<MethodAssert, Method> {
      */
     public MethodAssert isPackagePrivate() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting method %s to be package-private", actual.toString())
-                .doesNotContain(AccessFlag.PUBLIC, AccessFlag.PROTECTED, AccessFlag.PRIVATE);
+        if (hasPublicModifier() || hasProtectedModifier() || hasPrivateModifier()) {
+            throw assertionError(shouldBePackagePrivate(actual));
+        }
+        return this;
+    }
+
+    /**
+     * Verifies that the {@link Method} is not <em>package-private</em>.
+     *
+     * @return This {@link MethodAssert} instance.
+     */
+    public MethodAssert isNotPackagePrivate() {
+        isNotNull();
+        if (!hasPublicModifier() && !hasProtectedModifier() && !hasPrivateModifier()) {
+            throw assertionError(shouldNotBePackagePrivate(actual));
+        }
         return this;
     }
 
@@ -79,10 +145,27 @@ public class MethodAssert extends AbstractAssert<MethodAssert, Method> {
      */
     public MethodAssert isStatic() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting method %s to be static", actual.toString())
-                .contains(AccessFlag.STATIC);
+        if (!hasStaticModifier()) {
+            throw assertionError(shouldBeStatic(actual));
+        }
         return this;
+    }
+
+    /**
+     * Verifies that the {@link Method} is not <em>static</em>.
+     *
+     * @return This {@link MethodAssert} instance.
+     */
+    public MethodAssert isNotStatic() {
+        isNotNull();
+        if (hasStaticModifier()) {
+            throw assertionError(shouldNotBeStatic(actual));
+        }
+        return this;
+    }
+
+    private boolean hasStaticModifier() {
+        return Modifier.isStatic(actual.getModifiers());
     }
 
     /**

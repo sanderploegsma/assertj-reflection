@@ -1,10 +1,11 @@
 package org.assertj.reflection;
 
 import org.assertj.core.api.AbstractAssert;
-import org.assertj.core.api.Assertions;
 
-import java.lang.reflect.AccessFlag;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
+
+import static org.assertj.reflection.MemberModifierShouldBe.*;
 
 /**
  * Assertions for the {@link Constructor} type.
@@ -27,10 +28,27 @@ public class ConstructorAssert extends AbstractAssert<ConstructorAssert, Constru
      */
     public ConstructorAssert isPublic() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting constructor %s to be public", actual.toString())
-                .contains(AccessFlag.PUBLIC);
+        if (!hasPublicModifier()) {
+            throw assertionError(shouldBePublic(actual));
+        }
         return this;
+    }
+
+    /**
+     * Verifies that the {@link Constructor} is not <em>public</em>.
+     *
+     * @return This {@link ConstructorAssert} instance.
+     */
+    public ConstructorAssert isNotPublic() {
+        isNotNull();
+        if (hasPublicModifier()) {
+            throw assertionError(shouldNotBePublic(actual));
+        }
+        return this;
+    }
+
+    private boolean hasPublicModifier() {
+        return Modifier.isPublic(actual.getModifiers());
     }
 
     /**
@@ -40,10 +58,27 @@ public class ConstructorAssert extends AbstractAssert<ConstructorAssert, Constru
      */
     public ConstructorAssert isProtected() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting constructor %s to be protected", actual.toString())
-                .contains(AccessFlag.PROTECTED);
+        if (!hasProtectedModifier()) {
+            throw assertionError(shouldBeProtected(actual));
+        }
         return this;
+    }
+
+    /**
+     * Verifies that the {@link Constructor} is not <em>protected</em>.
+     *
+     * @return This {@link ConstructorAssert} instance.
+     */
+    public ConstructorAssert isNotProtected() {
+        isNotNull();
+        if (hasProtectedModifier()) {
+            throw assertionError(shouldNotBeProtected(actual));
+        }
+        return this;
+    }
+
+    private boolean hasProtectedModifier() {
+        return Modifier.isProtected(actual.getModifiers());
     }
 
     /**
@@ -53,10 +88,27 @@ public class ConstructorAssert extends AbstractAssert<ConstructorAssert, Constru
      */
     public ConstructorAssert isPrivate() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting constructor %s to be private", actual.toString())
-                .contains(AccessFlag.PRIVATE);
+        if (!hasPrivateModifier()) {
+            throw assertionError(shouldBePrivate(actual));
+        }
         return this;
+    }
+
+    /**
+     * Verifies that the {@link Constructor} is not <em>private</em>.
+     *
+     * @return This {@link ConstructorAssert} instance.
+     */
+    public ConstructorAssert isNotPrivate() {
+        isNotNull();
+        if (hasPrivateModifier()) {
+            throw assertionError(shouldNotBePrivate(actual));
+        }
+        return this;
+    }
+
+    private boolean hasPrivateModifier() {
+        return Modifier.isPrivate(actual.getModifiers());
     }
 
     /**
@@ -66,9 +118,22 @@ public class ConstructorAssert extends AbstractAssert<ConstructorAssert, Constru
      */
     public ConstructorAssert isPackagePrivate() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting constructor %s to be package-private", actual.toString())
-                .doesNotContain(AccessFlag.PUBLIC, AccessFlag.PROTECTED, AccessFlag.PRIVATE);
+        if (hasPublicModifier() || hasProtectedModifier() || hasPrivateModifier()) {
+            throw assertionError(shouldBePackagePrivate(actual));
+        }
+        return this;
+    }
+
+    /**
+     * Verifies that the {@link Constructor} is not <em>package-private</em>.
+     *
+     * @return This {@link ConstructorAssert} instance.
+     */
+    public ConstructorAssert isNotPackagePrivate() {
+        isNotNull();
+        if (!hasPublicModifier() && !hasProtectedModifier() && !hasPrivateModifier()) {
+            throw assertionError(shouldNotBePackagePrivate(actual));
+        }
         return this;
     }
 }

@@ -3,8 +3,10 @@ package org.assertj.reflection;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 
-import java.lang.reflect.AccessFlag;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
+import static org.assertj.reflection.MemberModifierShouldBe.*;
 
 /**
  * Assertions for the {@link Field} type.
@@ -27,10 +29,27 @@ public class FieldAssert extends AbstractAssert<FieldAssert, Field> {
      */
     public FieldAssert isPublic() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting field %s to be public", actual.toString())
-                .contains(AccessFlag.PUBLIC);
+        if (!hasPublicModifier()) {
+            throw assertionError(shouldBePublic(actual));
+        }
         return this;
+    }
+
+    /**
+     * Verifies that the {@link Field} is not <em>public</em>.
+     *
+     * @return This {@link FieldAssert} instance.
+     */
+    public FieldAssert isNotPublic() {
+        isNotNull();
+        if (hasPublicModifier()) {
+            throw assertionError(shouldNotBePublic(actual));
+        }
+        return this;
+    }
+
+    private boolean hasPublicModifier() {
+        return Modifier.isPublic(actual.getModifiers());
     }
 
     /**
@@ -40,10 +59,27 @@ public class FieldAssert extends AbstractAssert<FieldAssert, Field> {
      */
     public FieldAssert isProtected() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting field %s to be protected", actual.toString())
-                .contains(AccessFlag.PROTECTED);
+        if (!hasProtectedModifier()) {
+            throw assertionError(shouldBeProtected(actual));
+        }
         return this;
+    }
+
+    /**
+     * Verifies that the {@link Field} is not <em>protected</em>.
+     *
+     * @return This {@link FieldAssert} instance.
+     */
+    public FieldAssert isNotProtected() {
+        isNotNull();
+        if (hasProtectedModifier()) {
+            throw assertionError(shouldNotBeProtected(actual));
+        }
+        return this;
+    }
+
+    private boolean hasProtectedModifier() {
+        return Modifier.isProtected(actual.getModifiers());
     }
 
     /**
@@ -53,10 +89,27 @@ public class FieldAssert extends AbstractAssert<FieldAssert, Field> {
      */
     public FieldAssert isPrivate() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting field %s to be private", actual.toString())
-                .contains(AccessFlag.PRIVATE);
+        if (!hasPrivateModifier()) {
+            throw assertionError(shouldBePrivate(actual));
+        }
         return this;
+    }
+
+    /**
+     * Verifies that the {@link Field} is not <em>private</em>.
+     *
+     * @return This {@link FieldAssert} instance.
+     */
+    public FieldAssert isNotPrivate() {
+        isNotNull();
+        if (hasPrivateModifier()) {
+            throw assertionError(shouldNotBePrivate(actual));
+        }
+        return this;
+    }
+
+    private boolean hasPrivateModifier() {
+        return Modifier.isPrivate(actual.getModifiers());
     }
 
     /**
@@ -66,22 +119,22 @@ public class FieldAssert extends AbstractAssert<FieldAssert, Field> {
      */
     public FieldAssert isPackagePrivate() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting field %s to be package-private", actual.toString())
-                .doesNotContain(AccessFlag.PUBLIC, AccessFlag.PROTECTED, AccessFlag.PRIVATE);
+        if (hasPublicModifier() || hasProtectedModifier() || hasPrivateModifier()) {
+            throw assertionError(shouldBePackagePrivate(actual));
+        }
         return this;
     }
 
     /**
-     * Verifies that the {@link Field} is <em>final</em>.
+     * Verifies that the {@link Field} is not <em>package-private</em>.
      *
      * @return This {@link FieldAssert} instance.
      */
-    public FieldAssert isFinal() {
+    public FieldAssert isNotPackagePrivate() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting field %s to be final", actual.toString())
-                .contains(AccessFlag.FINAL);
+        if (!hasPublicModifier() && !hasProtectedModifier() && !hasPrivateModifier()) {
+            throw assertionError(shouldNotBePackagePrivate(actual));
+        }
         return this;
     }
 
@@ -92,10 +145,57 @@ public class FieldAssert extends AbstractAssert<FieldAssert, Field> {
      */
     public FieldAssert isStatic() {
         isNotNull();
-        Assertions.assertThat(actual.accessFlags())
-                .as("Expecting field %s to be static", actual.toString())
-                .contains(AccessFlag.STATIC);
+        if (!hasStaticModifier()) {
+            throw assertionError(shouldBeStatic(actual));
+        }
         return this;
+    }
+
+    /**
+     * Verifies that the {@link Field} is not <em>static</em>.
+     *
+     * @return This {@link FieldAssert} instance.
+     */
+    public FieldAssert isNotStatic() {
+        isNotNull();
+        if (hasStaticModifier()) {
+            throw assertionError(shouldNotBeStatic(actual));
+        }
+        return this;
+    }
+
+    private boolean hasStaticModifier() {
+        return Modifier.isStatic(actual.getModifiers());
+    }
+
+    /**
+     * Verifies that the {@link Field} is <em>final</em>.
+     *
+     * @return This {@link FieldAssert} instance.
+     */
+    public FieldAssert isFinal() {
+        isNotNull();
+        if (!hasFinalModifier()) {
+            throw assertionError(shouldBeFinal(actual));
+        }
+        return this;
+    }
+
+    /**
+     * Verifies that the {@link Field} is not <em>final</em>.
+     *
+     * @return This {@link FieldAssert} instance.
+     */
+    public FieldAssert isNotFinal() {
+        isNotNull();
+        if (hasFinalModifier()) {
+            throw assertionError(shouldNotBeFinal(actual));
+        }
+        return this;
+    }
+
+    private boolean hasFinalModifier() {
+        return Modifier.isFinal(actual.getModifiers());
     }
 
     /**
