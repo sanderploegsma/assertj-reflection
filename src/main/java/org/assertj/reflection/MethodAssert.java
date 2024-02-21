@@ -96,4 +96,18 @@ public class MethodAssert extends AbstractAssert<MethodAssert, Method> {
         Assertions.assertThat(actual.getReturnType()).isEqualTo(expected);
         return this;
     }
+
+    /**
+     * Verifies that the {@link Method} declares the given exception to be thrown.
+     * If a declared exception is assignable to the expected exception, this assertion passes.
+     *
+     * @param expected The expected exception to be thrown.
+     * @return This {@link MethodAssert} instance.
+     */
+    public MethodAssert throwsException(Class<? extends Exception> expected) {
+        isNotNull();
+        var exceptions = actual.getExceptionTypes();
+        Assertions.assertThat(exceptions).anyMatch(expected::isAssignableFrom);
+        return this;
+    }
 }
