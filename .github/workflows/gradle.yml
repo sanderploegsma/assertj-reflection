@@ -10,9 +10,6 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
     strategy:
       matrix:
         java-version:
@@ -20,6 +17,10 @@ jobs:
           - '17'
           - '11'
           - '8'
+    name: Build with JDK ${{ matrix.java-version }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK ${{ matrix.java-version }}
