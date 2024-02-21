@@ -45,8 +45,8 @@ class ClassAssertHasDeclaredMethodTest {
                 .hasDeclaredMethod("methodOnSubject", int.class)
                 .hasDeclaredMethod("methodOnBoth")
                 .hasDeclaredMethod("toString")
-                .hasDeclaredMethod("staticMethod", new Class[]{int.class, boolean.class})
-                .hasDeclaredMethod("genericMethod", new Class[]{Object.class, String.class});
+                .hasDeclaredMethod("staticMethod", int.class, boolean.class)
+                .hasDeclaredMethod("genericMethod", Object.class, String.class);
     }
 
     @Test

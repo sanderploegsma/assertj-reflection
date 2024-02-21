@@ -21,31 +21,12 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
     }
 
     /**
-     * Verifies that the {@link Class} has a declared constructor with no arguments.
-     *
-     * @return this {@link ClassAssert} instance.
-     */
-    public ClassAssert hasDeclaredConstructor() {
-        return hasDeclaredConstructor(new Class[0], null);
-    }
-
-    /**
-     * Verifies that the {@link Class} has a declared constructor with a single argument.
-     *
-     * @param parameterType The type of the constructor argument.
-     * @return this {@link ClassAssert} instance.
-     */
-    public ClassAssert hasDeclaredConstructor(Class<?> parameterType) {
-        return hasDeclaredConstructor(new Class[]{parameterType}, null);
-    }
-
-    /**
-     * Verifies that the {@link Class} has a declared constructor with multiple arguments.
+     * Verifies that the {@link Class} has a declared constructor with the given argument types.
      *
      * @param parameterTypes The types of the constructor arguments.
      * @return this {@link ClassAssert} instance.
      */
-    public ClassAssert hasDeclaredConstructor(Class<?>[] parameterTypes) {
+    public ClassAssert hasDeclaredConstructor(Class<?>... parameterTypes) {
         return hasDeclaredConstructor(parameterTypes, null);
     }
 
@@ -99,31 +80,12 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
     }
 
     /**
-     * Verifies that the {@link Class} does not have a declared constructor with no arguments.
-     *
-     * @return this {@link ClassAssert} instance.
-     */
-    public ClassAssert hasNoDeclaredConstructor() {
-        return hasNoDeclaredConstructor(new Class[0]);
-    }
-
-    /**
-     * Verifies that the {@link Class} does not have a declared constructor with a single argument of the given type.
-     *
-     * @param parameterType The type of the constructor argument.
-     * @return this {@link ClassAssert} instance.
-     */
-    public ClassAssert hasNoDeclaredConstructor(Class<?> parameterType) {
-        return hasNoDeclaredConstructor(new Class[]{parameterType});
-    }
-
-    /**
-     * Verifies that the {@link Class} does not have a declared constructor with multiple arguments.
+     * Verifies that the {@link Class} does not have a declared constructor with the given argument types.
      *
      * @param parameterTypes The types of the constructor arguments.
      * @return this {@link ClassAssert} instance.
      */
-    public ClassAssert hasNoDeclaredConstructor(Class<?>[] parameterTypes) {
+    public ClassAssert hasNoDeclaredConstructor(Class<?>... parameterTypes) {
         isNotNull();
         try {
             var constructor = actual.getDeclaredConstructor(parameterTypes);
@@ -188,34 +150,13 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
     }
 
     /**
-     * Verifies that the {@link Class} has a declared method with the given name and no arguments.
+     * Verifies that the {@link Class} has a declared method with the given name and argument types.
      *
      * @param methodName The name of the declared method.
+     * @param parameterTypes The types of the declared method arguments.
      * @return this {@link ClassAssert} instance.
      */
-    public ClassAssert hasDeclaredMethod(String methodName) {
-        return hasDeclaredMethod(methodName, new Class[0], null);
-    }
-
-    /**
-     * Verifies that the {@link Class} has a declared method with the given name and a single argument.
-     *
-     * @param methodName    The name of the declared method.
-     * @param parameterType The type of the method argument.
-     * @return this {@link ClassAssert} instance.
-     */
-    public ClassAssert hasDeclaredMethod(String methodName, Class<?> parameterType) {
-        return hasDeclaredMethod(methodName, new Class[]{parameterType}, null);
-    }
-
-    /**
-     * Verifies that the {@link Class} has a declared method with the given name and multiple arguments.
-     *
-     * @param methodName     The name of the declared method.
-     * @param parameterTypes The types of the method arguments.
-     * @return this {@link ClassAssert} instance.
-     */
-    public ClassAssert hasDeclaredMethod(String methodName, Class<?>[] parameterTypes) {
+    public ClassAssert hasDeclaredMethod(String methodName, Class<?>... parameterTypes) {
         return hasDeclaredMethod(methodName, parameterTypes, null);
     }
 
@@ -235,7 +176,7 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
      * Verifies that the {@link Class} has a declared method with the given name and a single argument.
      *
      * @param methodName           The name of the declared method.
-     * @param parameterType        The type of the method argument.
+     * @param parameterType        The type of the declared method argument.
      * @param methodAssertConsumer Consumer that is invoked with an instance of {@link MethodAssert},
      *                             to perform additional assertions on the matched method.
      * @return this {@link ClassAssert} instance.
@@ -248,7 +189,7 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
      * Verifies that the {@link Class} has a declared method with the given name and multiple arguments.
      *
      * @param methodName           The name of the declared method.
-     * @param parameterTypes       The types of the method arguments.
+     * @param parameterTypes       The types of the declared method arguments.
      * @param methodAssertConsumer Consumer that is invoked with an instance of {@link MethodAssert},
      *                             to perform additional assertions on the matched method.
      * @return this {@link ClassAssert} instance.
@@ -272,34 +213,13 @@ public class ClassAssert extends AbstractAssert<ClassAssert, Class<?>> {
     }
 
     /**
-     * Verifies that the {@link Class} does not have a declared method with the given name and no arguments.
-     *
-     * @param methodName The name of the declared method.
-     * @return this {@link ClassAssert} instance.
-     */
-    public ClassAssert hasNoDeclaredMethod(String methodName) {
-        return hasNoDeclaredMethod(methodName, new Class[0]);
-    }
-
-    /**
-     * Verifies that the {@link Class} does not have a declared method with the given name and a single argument.
-     *
-     * @param methodName    The name of the declared method.
-     * @param parameterType The type of the method argument.
-     * @return this {@link ClassAssert} instance.
-     */
-    public ClassAssert hasNoDeclaredMethod(String methodName, Class<?> parameterType) {
-        return hasNoDeclaredMethod(methodName, new Class[]{parameterType});
-    }
-
-    /**
-     * Verifies that the {@link Class} has a declared method with the given name and multiple arguments.
+     * Verifies that the {@link Class} has a declared method with the given name and argument types.
      *
      * @param methodName     The name of the declared method.
-     * @param parameterTypes The types of the method arguments.
+     * @param parameterTypes The types of the declared method arguments.
      * @return this {@link ClassAssert} instance.
      */
-    public ClassAssert hasNoDeclaredMethod(String methodName, Class<?>[] parameterTypes) {
+    public ClassAssert hasNoDeclaredMethod(String methodName, Class<?>... parameterTypes) {
         isNotNull();
         try {
             var method = actual.getDeclaredMethod(methodName, parameterTypes);

@@ -32,7 +32,7 @@ class ClassAssertHasDeclaredConstructorTest {
 
         assertThat(Subject.class)
                 .hasDeclaredConstructor(int.class)
-                .hasDeclaredConstructor(new Class[]{int.class, boolean.class});
+                .hasDeclaredConstructor(int.class, boolean.class);
     }
 
     @Test
