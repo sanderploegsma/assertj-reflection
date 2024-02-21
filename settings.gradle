@@ -1,3 +1,4 @@
-rootProject.name = 'assertj-reflection'
+rootProject.name = 'assertj-reflection-root'
 
-include('examples:testing-code-generation')
+include 'assertj-reflection'
+include 'examples:testing-code-generation'
