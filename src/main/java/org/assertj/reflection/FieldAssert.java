@@ -97,4 +97,16 @@ public class FieldAssert extends AbstractAssert<FieldAssert, Field> {
                 .contains(AccessFlag.STATIC);
         return this;
     }
+
+    /**
+     * Verifies that the {@link Field} has the expected type.
+     *
+     * @param expected The expected type.
+     * @return this {@link FieldAssert} instance.
+     */
+    public FieldAssert hasType(Class<?> expected) {
+        isNotNull();
+        Assertions.assertThat(actual.getType()).isEqualTo(expected);
+        return this;
+    }
 }
