@@ -1,4 +1,4 @@
-# assertj-reflection
+# assertj-reflection ![Maven Central Version](https://img.shields.io/maven-central/v/io.github.sanderploegsma/assertj-reflection)
 
 [![Coverage Status](https://coveralls.io/repos/github/sanderploegsma/assertj-reflection/badge.svg?branch=main)](https://coveralls.io/github/sanderploegsma/assertj-reflection?branch=main)
 
