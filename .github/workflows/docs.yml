@@ -20,13 +20,14 @@ jobs:
         with:
           java-version: '21'
           distribution: temurin
+          cache: maven
       - name: Build documentation
-        run: ./gradlew --no-daemon :assertj-reflection:javadoc
+        run: mvn javadoc:javadoc
       - name: Upload artifact
         uses: actions/upload-pages-artifact@0252fc4ba7626f0298f0cf00902a25c6afc77fa8
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
-          path: assertj-reflection/build/docs/javadoc
+          path: target/site/apidocs
 
   deploy:
     name: Deploy to GitHub Pages
