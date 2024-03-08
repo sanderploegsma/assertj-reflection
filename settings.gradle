@@ -1,4 +1,0 @@
-rootProject.name = 'assertj-reflection-root'
-
-include 'assertj-reflection'
-include 'examples:testing-code-generation'
